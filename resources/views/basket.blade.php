@@ -58,7 +58,7 @@
 				</div>
 			</div>
 		</div>
-        @inject('basket','App\Support\Basket\Basket' )
+        @inject('cost','App\Support\Cost\Contracts\CostInterface')
 		<div>
 			<div class="bg-white rounded mt-4 shadow-lg py-6">
 				<div class="px-8">
@@ -66,22 +66,19 @@
 						<h1>@lang('basket.payment')</h1>
 					</div>
 				</div>
-                <div class="px-8 mt-4">
-					<div class="flex items-end justify-between">
-						<span class="text-sm font-semibold">@lang('basket.total amount')</span>
-						<span class="text-sm text-gray-500 mb-px">{{number_format($basket->subTotal())}}</span>
-					</div>
-				</div>
-                <div class="px-8 mt-4">
-					<div class="flex items-end justify-between">
-						<span class="text-sm font-semibold">@lang('basket.transportation costs')</span>
-						<span class="text-sm text-gray-500 mb-px">{{number_format(10000)}}</span>
-					</div>
-				</div>
+                @foreach ($cost->getSummary() as $description => $price)
+                    <div class="px-8 mt-4">
+                        <div class="flex items-end justify-between">
+                            <span class="text-sm font-semibold">{{$description}}</span>
+                            <span class="text-sm font-semibold">@lang('basket.total amount')</span>
+                            <span class="text-sm text-gray-500 mb-px">{{number_format($price)}}</span>
+                        </div>
+                    </div>
+                @endforeach
                 <div class="px-8 mt-4">
 					<div class="flex items-end justify-between">
 						<span class="text-sm font-semibold">@lang('basket.amount payble')</span>
-						<span class="text-sm text-gray-500 mb-px">{{number_format($basket->subTotal()+ 10000)}}</span>
+						<span class="text-sm text-gray-500 mb-px">{{number_format($cost->getTotalCost())}}</span>
 					</div>
 				</div>
 				<div class="px-8 mt-4 border-t pt-4">
