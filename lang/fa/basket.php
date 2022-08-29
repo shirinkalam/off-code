@@ -11,4 +11,5 @@ return [
     'continue the order'=>'ثبت و ادامه ی سفارش',
     'empty basket'=>'سبد خرید شما خالی میباشد',
     'update'=>'بروزرسانی',
+    'off code' => 'کد تخفیف',
 ];

@@ -4,6 +4,7 @@ namespace App\Support\Payment;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Support\Basket\Basket;
+use App\Support\Cost\Contracts\CostInterface;
 use App\Support\Payment\Gateways\GatewayInterface;
 use App\Support\Payment\Gateways\Pasargad;
 use App\Support\Payment\Gateways\Saman;
@@ -15,11 +16,13 @@ class Transaction
 {
     private $request;
     private $basket;
+    private $cost;
 
-    public function __construct(Request $request,Basket $basket)
+    public function __construct(Request $request,Basket $basket,CostInterface $cost)
     {
         $this->request = $request ;
         $this->basket = $basket ;
+        $this->cost = $cost ;
     }
 
     public function checkout()
@@ -38,7 +41,7 @@ class Transaction
         }
 
         if($payment->isOnline()){
-            return $this->gateWayFctory()->pay($order);
+            return $this->gateWayFctory()->pay($order , $this->cost->getTotalCost());
         }
 
         $this->normailizeQuantity($order);
@@ -63,7 +66,7 @@ class Transaction
         return Payment::create([
             'order_id'=>$order->id,
             'method'=>$this->request->method,
-            'amount'=>$order->amount,
+            'amount'=>$this->cost->getTotalCost(),
         ]);
     }
 

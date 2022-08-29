@@ -81,6 +81,26 @@
 						<span class="text-sm text-gray-500 mb-px">{{number_format($cost->getTotalCost())}}</span>
 					</div>
 				</div>
+
+                <div class="px-8 mt-4">
+					<div class="flex items-end justify-between">
+                        <span class="text-sm font-semibold">@lang('basket.off code')</span>
+                        @if(session()->has('coupons'))
+                        <form method="GET">
+                            @csrf
+                            <span>{{session()->get('coupons')->code}}</span>
+                            <button class="submit" type="submit">اعمال</button>
+                        </form>
+                        @else
+                        <form action="{{route('coupons.store')}}" method="POST">
+                            @csrf
+                            <input name="coupon" type="text">
+                            <button class="submit" type="submit">اعمال</button>
+                        </form>
+                        @endif
+					</div>
+				</div>
+
 				<div class="px-8 mt-4 border-t pt-4">
 				</div>
 				<div class="flex flex-col px-8 mt-4 pt-4">
