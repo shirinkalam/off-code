@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class CouponsController extends Controller
 {
+
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function store(Request $request)
     {
         #validate coupon
@@ -27,5 +34,12 @@ class CouponsController extends Controller
             return redirect()->back()->withError('کد تخفیف نا معتبر میباشد');
         }
 
+    }
+
+    public function remove()
+    {
+        session()->forget('coupon');
+
+        return back();
     }
 }

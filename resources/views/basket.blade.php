@@ -86,7 +86,7 @@
 					<div class="flex items-end justify-between">
                         <span class="text-sm font-semibold">@lang('basket.off code')</span>
                         @if(session()->has('coupons'))
-                        <form method="GET">
+                        <form action="{{route('coupons.remove')}}" method="GET">
                             @csrf
                             <span>{{session()->get('coupons')->code}}</span>
                             <button class="submit" type="submit">اعمال</button>

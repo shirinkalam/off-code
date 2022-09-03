@@ -65,6 +65,7 @@ Route::get('basket/checkout',[BasketController::class,'checkoutForm'])->name('ba
 Route::post('basket/checkout',[BasketController::class,'checkout'])->name('basket.checkout');
 Route::post('payment/{gateway}/callback',[PaymentController::class,'varify'])->name('payment.verify');
 Route::post('coupon',[CouponsController::class,'store'])->name('coupons.store');
+Route::get('coupon/remove',[BasketController::class,'remove'])->name('coupons.remove');
 
 
 
