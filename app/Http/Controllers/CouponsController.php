@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coupon;
+use App\Support\Discount\Coupon\CouponValidator;
 use Illuminate\Http\Request;
 
 class CouponsController extends Controller
 {
+    private $validator;
 
-    
-    public function __construct()
+    public function __construct(CouponValidator $validator)
     {
         $this->middleware('auth');
+        $this->validator = $validator;
     }
 
     public function store(Request $request)
