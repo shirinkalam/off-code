@@ -3,28 +3,32 @@
 namespace App\Support\Cost;
 
 use App\Support\Cost\Contracts\CostInterface;
+use App\Support\Discount\DiscountManager;
 
-class ShippingCost implements CostInterface
+class DiscountCost implements CostInterface
 {
-    const SHIPPING_COST = 20000 ;
-    private $cost ;
 
-    public function __construct(CostInterface $cost)
+    private $cost;
+    private $discountManager;
+
+    public function __construct(CostInterface $cost, DiscountManager $discountManager)
     {
         $this->cost = $cost ;
+        $this->discountManager = $discountManager ;
+
     }
 
     public function getCost()
     {
-        return self::SHIPPING_COST;
+        return $this->discountManager->calculateUserDiscount();
     }
     public function getTotalCost()
     {
-        return $this->cost->getTotalCost() + $this->getCost();
+        return $this->cost->getTotalCost() - $this->getCost();
     }
     public function persianDescription()
     {
-       return 'هزینه ی حمل و نقل';
+        return 'میزان تخفیف';
     }
     public function getSummary()
     {
