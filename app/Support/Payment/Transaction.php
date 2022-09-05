@@ -113,6 +113,8 @@ class Transaction
 
         $this->basket->clear();
 
+        session()->forget('coupon');
+
         return true ;
     }
 
